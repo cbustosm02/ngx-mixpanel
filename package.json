@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build:lib": "ng-packagr -p projects/ngx-mixpanel/ng-package.json"
   },
   "private": true,
   "dependencies": {
