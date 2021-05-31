@@ -9,9 +9,12 @@ This library was generated with [Angular CLI](https://github.com/angular/angular
 ## Instalación
 
 `npm i ngx-mixpanel --s`
+
 `npm i mixpanel-browser --s`
 
 ## Agregar al app.module de tu proyecto
+
+Remplazar `Token project from Mixpanel` por el token que se genera al registrate en mixpanel y crear un proyecto allí.
 
     import { NgxMixpanelModule } from 'ngx-mixpanel';
   
@@ -28,9 +31,13 @@ This library was generated with [Angular CLI](https://github.com/angular/angular
  ## Uso de la directiva dentro del proyecto
   
 Cuando desees capturar el evento de una etiqueta de html cuando le hagan click (en su frencuencia son botones pero puede ser cualquiera) solo agrega la directiva `mixPanelEvent` el cual recibe un objeto:
+
   {
-    `evento`: 'Nombre del evento que quiereas restrear, tú le pones el nombre',
-    `propiedades`: {} //Un objeto opcional que puedes agregarle la cantidad de atributos, los cuales puedan ayudar a describir mejor la acción del evento
+  
+  `evento`: 'Nombre del evento que quiereas restrear, tú le pones el nombre',
+    
+  `propiedades`: { } //Un objeto opcional que puedes agregarle la cantidad de atributos, los cuales puedan ayudar a describir mejor la acción del evento
+    
   }
      
   ### Ejemplo
@@ -61,22 +68,23 @@ Al enviar el evento con el nombre `login` se requiere un atributo adiciona el cu
     ...
     constructor(private mixPanelService: NgxMixpanelService) {}
 
-  El servicio contiene los siguiente métodos:
+### El servicio contiene los siguiente métodos:
 
    `login`
-    Recuerda que el evento de login recibe el correo del usuario, o en su defecto un identificador único.
+   
+   Recuerda que el evento de login recibe el correo del usuario, o en su defecto un identificador único.
 
-      this.mixPanelService.login('user@test.com');
+    this.mixPanelService.login('user@test.com');
   
    `logout`
 
-     this.mixPanelService.logout();
+    this.mixPanelService.logout();
 
    `eventRegister`
    
-    Recibe el nombre del evento y otro parámetro opcional (un Objeto) que puedes agregarle la cantidad de atributos, los cuales puedan ayudar a describir mejor la acción del evento.
+   Recibe el nombre del evento y otro parámetro opcional (un Objeto) que puedes agregarle la cantidad de atributos, los cuales puedan ayudar a describir mejor la acción del evento.
 
-     this.mixPanelService.eventRegister('My evento', {detalles: 'Es un evento personalizado' })
+    this.mixPanelService.eventRegister('My evento', {detalles: 'Es un evento personalizado' })
 
      
     
