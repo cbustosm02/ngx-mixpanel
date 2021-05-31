@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NgxMixpanelModule } from 'ngx-mixpanel';
 
 @NgModule({
   declarations: [
@@ -10,7 +10,10 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    NgxMixpanelModule
+    .withOptions({
+      token: 'e1e19aad60aea607df64b9f1983221cb',
+        }),
   ],
   providers: [],
   bootstrap: [AppComponent]

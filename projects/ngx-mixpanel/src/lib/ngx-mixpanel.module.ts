@@ -1,5 +1,8 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { NgxMixpanelDirective, token } from './ngx-mixpanel.directive';
+import { 
+  NgxMixpanelDirective, 
+  token
+} from './ngx-mixpanel.directive';
 
 
 
@@ -26,9 +29,9 @@ export class NgxMixpanelModule {
    */
    static withOptions(options: {
     token: string
-  }): ModuleWithProviders<NgxMixpanelDirective> {
+  }): ModuleWithProviders<NgxMixpanelModule> {
     return {
-      ngModule: NgxMixpanelDirective,
+      ngModule:NgxMixpanelModule,
       providers: [
         options.token ? {provide: token, useValue: options.token} : [],
       ],

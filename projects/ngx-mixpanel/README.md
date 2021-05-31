@@ -1,24 +1,96 @@
-# NgxMixpanel
+# Ngx-mixpanel
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.2.
+This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.6.
 
-## Code scaffolding
+## Compatibilidad
 
-Run `ng generate component component-name --project ngx-mixpanel` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ngx-mixpanel`.
-> Note: Don't forget to add `--project ngx-mixpanel` or else it will be added to the default project in your `angular.json` file. 
+  Angular 10+
 
-## Build
+## Instalación
 
-Run `ng build ngx-mixpanel` to build the project. The build artifacts will be stored in the `dist/` directory.
+`npm i ngx-mixpanel --s`
+`npm i mixpanel-browser --s`
 
-## Publishing
+## Agregar al app.module de tu proyecto
 
-After building your library with `ng build ngx-mixpanel`, go to the dist folder `cd dist/ngx-mixpanel` and run `npm publish`.
+    import { NgxMixpanelModule } from 'ngx-mixpanel';
+  
+    @NgModule({
+    ...
+      import: [
+      NgxMixpanelModule.withOptions({
+      token: 'Token project from Mixpanel',
+        }),
+      ]
+    ...
+    })
+  
+ ## Uso de la directiva dentro del proyecto
+  
+Cuando desees capturar el evento de una etiqueta de html cuando le hagan click (en su frencuencia son botones pero puede ser cualquiera) solo agrega la directiva `mixPanelEvent` el cual recibe un objeto:
+  {
+    `evento`: 'Nombre del evento que quiereas restrear, tú le pones el nombre',
+    `propiedades`: {} //Un objeto opcional que puedes agregarle la cantidad de atributos, los cuales puedan ayudar a describir mejor la acción del evento
+  }
+     
+  ### Ejemplo
+     
+     <button [mixPanelEvent]="{evento: 'My evento', propiedades: {'click': 'usuario presionó un botón'}}"> Esto es un botón </button>
+  
+## Eventos especiales
+    
+Hay dos eventos únicos dentro de mix panel, los cuales determinan cuando un usuario inicia sesión en la herramienta  `login` o cuando el usuario cierra su sesión  `logout`, esto con el fin de realizar las medicionas de uso de su proyecto.
+    
+Al enviar el evento con el nombre `login` se requiere un atributo adiciona el cual es `userEmail` el cual debes proporcionar el correo del usuario o en su defecto un identificador de usuario el cual deberás usar de aquí en adelante.
+    
+ ### Ejemplo  `login`
+ 
+    <button [mixPanelEvent]="{evento: 'login', propiedades: {'click': 'usuario ingresó a la herramienta'}}" userEmail="usuario@email.com"> Ingresar </button>
+     
+ ### Ejemplo  `logout`
+ 
+    <button [mixPanelEvent]="{evento: 'logout', propiedades: {'click': 'usuario cerró sesión'}}" userEmail="usuario@email.com"> Salir </button>
 
-## Running unit tests
 
-Run `ng test ngx-mixpanel` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Servicio
 
-## Further help
+  En caso de que necesites usar las funciones de tracking de mixpanel dentro de tu componente en su typescript puedes injertar el siguiente servicio al constructor de tu componente.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+    import { NgxMixpanelService } from 'ngx-mixpanel';
+
+    ...
+    constructor(private mixPanelService: NgxMixpanelService) {}
+
+  El servicio contiene los siguiente métodos:
+
+   `login`
+    Recuerda que el evento de login recibe el correo del usuario, o en su defecto un identificador único.
+
+      this.mixPanelService.login('user@test.com');
+  
+   `logout`
+
+     this.mixPanelService.logout();
+
+   `eventRegister`
+
+    Recibe el nombre del evento y otro parámetro opcional (un Objeto) que puedes agregarle la cantidad de atributos, los cuales puedan ayudar a describir mejor la acción del evento.
+
+     this.mixPanelService.eventRegister('My evento', {detalles: 'Es un evento personalizado' })
+
+     
+    
+## Mixpanel
+
+  Ahora al capturar eventos podrás diseñar dashboards con los reportes que necesites, para más información del uso de Mixpanel puedes visitar: https://developer.mixpanel.com/
+
+
+## Ayuda
+
+Para obtener información del uso de angular use `ng help` o dirígete al enlace [Angular CLI Overview and Command Reference](https://angular.io/cli) web.
+
+## Autor
+`César Bustos`
+
+
+ 2021
