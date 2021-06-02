@@ -1,6 +1,6 @@
 {
   "name": "ngx-mixpanel",
-  "version": "0.4.0",
+  "version": "0.7.0",
   "author": "César Bustos <cbustosm0@outlook.com>",
   "repository": "https://github.com/cbustosm02/ngx-mixpanel",
   "description": "Directive for the easier use of the Maxpanel service event tracking",

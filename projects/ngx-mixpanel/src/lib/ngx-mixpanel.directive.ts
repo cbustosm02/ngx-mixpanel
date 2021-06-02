@@ -1,10 +1,11 @@
 import { Directive, ElementRef, HostListener, Inject, Injectable, InjectionToken, Input, OnInit } from '@angular/core';
 import mixpanel from 'mixpanel-browser';
+import { NgxMixpanelService } from './ngx-mixpanel.service';
 
-interface MixPanelEvent {
-  evento: string;
-  propiedades: any;
-}
+// interface MixPanelEvent {
+//   evento: string;
+//   propiedades: any;
+// }
 
 
 export const token = new InjectionToken<string>('token');
@@ -14,11 +15,14 @@ export const token = new InjectionToken<string>('token');
 
 })
 export class NgxMixpanelDirective {
-  @Input() mixPanelEvent: MixPanelEvent = {evento: '',propiedades: {} };
-  @Input() userEmail = '';
+  @Input() mixPanelEvent = '';
+  @Input() mixPanelProp = {};
+  @Input() mixPaneluserEmail = '';
+  private path = '';
 
   constructor(private el: ElementRef, 
-    @Inject(token) private TOKEN: string
+    @Inject(token) private TOKEN: string,
+    private mixpanelService: NgxMixpanelService
     ) {
       // el.nativeElement.style.backgroundColor = 'yellow';
       // console.log("Click elento")
@@ -32,12 +36,13 @@ export class NgxMixpanelDirective {
   }
 
 
-  @HostListener('click', ['$event.target'])
-  onClick(btn) {
+  @HostListener('click', ['$event'])
+  onClick(item) {
 
-    console.log('Evento click')
+    // console.log('Evento click', item.view.location.pathname, item)
+    this.path = item.view.location.pathname;
 
-    switch (this.mixPanelEvent.evento) {
+    switch (this.mixPanelEvent) {
       case 'login':
         this.login();
         break;
@@ -58,10 +63,9 @@ export class NgxMixpanelDirective {
    */
   eventRegister() {
 
-    if (this.mixPanelEvent.evento) {
-      let p = this.mixPanelEvent.propiedades ? this.mixPanelEvent.propiedades : {};
-      mixpanel.track(this.mixPanelEvent.evento, p)
-      console.log("Registrando evento: ", this.mixPanelEvent.evento)
+    if (this.mixPanelEvent) {
+      let p = this.mixPanelProp ? this.mixPanelProp : {};
+      this.mixpanelService.eventRegister(this.mixPanelEvent, this.path, p)
     } else {
       console.error('No se puede registrar evento: undefined');
       
@@ -73,17 +77,7 @@ export class NgxMixpanelDirective {
    * Register login event in Mixpanel.
    */
   login() {
-
-    if (this.userEmail) {
-      mixpanel.identify(this.userEmail);
-      mixpanel.track('$session_start', {
-        'source': "Click button",
-      });
-      console.log("Registrando evento: login")
-    } else {
-      console.error('userEmail not provided in mixpanel login event');
-
-    }
+      this.mixpanelService.login(this.mixPaneluserEmail)
   }
 
   /**
@@ -91,8 +85,7 @@ export class NgxMixpanelDirective {
    *
    */
   logout() {
-    mixpanel.track('$session_end');
-    console.log("Registrando evento: logout")
+    this.mixpanelService.logout();
   }
 
 

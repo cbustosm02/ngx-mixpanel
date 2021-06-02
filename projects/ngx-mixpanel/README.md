@@ -32,31 +32,30 @@ Remplazar `Token project from Mixpanel` por el token que se genera al registrate
   
 Cuando desees capturar el evento de una etiqueta de html cuando le hagan click (en su frencuencia son botones pero puede ser cualquiera) solo agrega la directiva `mixPanelEvent` el cual recibe un objeto:
 
-  {
   
-  `evento`: 'Nombre del evento que quiereas restrear, tú le pones el nombre',
+  `mixPanelEvent`: 'Nombre del evento que quiereas restrear, tú le pones el nombre',
     
-  `propiedades`: { } //Un objeto opcional que puedes agregarle la cantidad de atributos, los cuales puedan ayudar a describir mejor la acción del evento
+  `mixPanelProp`: { } //Un objeto opcional que puedes agregarle la cantidad de atributos que desees, los cuales puedan ayudar a describir mejor la acción del evento
     
-  }
      
   ### Ejemplo
      
-     <button [mixPanelEvent]="{evento: 'My evento', propiedades: {'click': 'usuario presionó un botón'}}"> Esto es un botón </button>
+     <button mixPanelEvent="My evento"  [mixPanelProp]="{'click': 'usuario presionó un botón'}"> Esto es un botón </button>
   
 ## Eventos especiales
     
 Hay dos eventos únicos dentro de mix panel, los cuales determinan cuando un usuario inicia sesión en la herramienta  `login` o cuando el usuario cierra su sesión  `logout`, esto con el fin de realizar las medicionas de uso de su proyecto.
-    
-Al enviar el evento con el nombre `login` se requiere un atributo adiciona el cual es `userEmail` el cual debes proporcionar el correo del usuario o en su defecto un identificador de usuario el cual deberás usar de aquí en adelante.
+  
     
  ### Ejemplo  `login`
+
+ Al enviar el evento con el nombre `login` se requiere un atributo adiciona el cual es `userEmail` el cual debes proporcionar el correo del usuario o en su defecto un identificador de usuario el cual deberás usar de aquí en adelante.
  
-    <button [mixPanelEvent]="{evento: 'login', propiedades: {'click': 'usuario ingresó a la herramienta'}}" userEmail="usuario@email.com"> Ingresar </button>
+    <button mixPanelEvent="login" [mixPanelProp]="{'click': 'usuario ingresó a la herramienta'}" userEmail="usuario@email.com"> Ingresar </button>
      
  ### Ejemplo  `logout`
  
-    <button [mixPanelEvent]="{evento: 'logout', propiedades: {'click': 'usuario cerró sesión'}}" userEmail="usuario@email.com"> Salir </button>
+    <button mixPanelEvent="logout" [mixPanelProp]="{'click': 'usuario cerró sesión'}"> Salir </button>
 
 
 ## Servicio
@@ -82,9 +81,9 @@ Al enviar el evento con el nombre `login` se requiere un atributo adiciona el cu
 
    `eventRegister`
    
-   Recibe el nombre del evento y otro parámetro opcional (un Objeto) que puedes agregarle la cantidad de atributos, los cuales puedan ayudar a describir mejor la acción del evento.
+   Recibe el nombre del evento, el path desde donde se ejecuta este y otro parámetro opcional (un Objeto) que puedes agregarle la cantidad de atributos, los cuales puedan ayudar a describir mejor la acción del evento.
 
-    this.mixPanelService.eventRegister('My evento', {detalles: 'Es un evento personalizado' })
+    this.mixPanelService.eventRegister('My evento', '/ruta/componente' , {detalles: 'Es un evento personalizado' })
 
      
     
