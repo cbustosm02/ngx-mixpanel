@@ -15,10 +15,10 @@ export const token = new InjectionToken<string>('token');
 
 })
 export class NgxMixpanelDirective {
-  @Input() mixPanelEvent = '';
-  @Input() mixPanelProp = {};
-  @Input() mixPaneluserEmail = '';
-  private path = '';
+  @Input() mixPanelEvent: string = '';
+  @Input() mixPanelProp: any = {};
+  @Input() mixPaneluserEmail: string = '';
+  private path: string = '';
 
   constructor(private el: ElementRef, 
     @Inject(token) private TOKEN: string,
@@ -67,7 +67,7 @@ export class NgxMixpanelDirective {
       let p = this.mixPanelProp ? this.mixPanelProp : {};
       this.mixpanelService.eventRegister(this.mixPanelEvent, this.path, p)
     } else {
-      console.error('No se puede registrar evento: undefined');
+      console.error('No se puede registrar evento: ', this.mixPanelEvent);
       
     }
 
